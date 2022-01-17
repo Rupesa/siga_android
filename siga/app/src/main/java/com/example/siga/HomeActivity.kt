@@ -1,17 +1,22 @@
 package com.example.siga
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+
 
 class HomeActivity : AppCompatActivity() {
 
     lateinit var mAuth: FirebaseAuth
+    lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var userImageUrl: String
     lateinit var userName: String
     lateinit var userEmail: String
@@ -22,7 +27,15 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
         mAuth = FirebaseAuth.getInstance()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         val currentUser = mAuth.currentUser
         userImageUrl = currentUser?.photoUrl.toString()
         userName = currentUser?.displayName.toString()

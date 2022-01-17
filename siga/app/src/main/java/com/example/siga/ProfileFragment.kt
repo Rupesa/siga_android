@@ -76,6 +76,7 @@ class ProfileFragment : Fragment() {
 
         btnLogout.setOnClickListener {
             homeActivity.mAuth.signOut()
+            homeActivity.mGoogleSignInClient.signOut();
             val intent = Intent(homeActivity, LoginActivity::class.java)
             startActivity(intent)
             homeActivity.finish()
