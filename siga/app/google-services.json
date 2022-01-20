@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "910648143142-jgguqfv038arr47avsts7raqtl5k1nr8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.siga",
+            "certificate_hash": "89db7dc5ef639cc9af8066432848659d78d46796"
+          }
+        },
+        {
           "client_id": "910648143142-rf63hrabvjvmj73sjkbh47jv0u0b19ho.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
