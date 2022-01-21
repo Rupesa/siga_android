@@ -15,11 +15,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivUserImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.217"
+                tools:src="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/tvUserName"
@@ -30,7 +35,8 @@
                 android:padding="5pt"
                 android:text="Username"
                 android:textColor="#171717"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -39,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/ivCheck"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 app:srcCompat="@drawable/ic_baseline_check_circle_outline_24"
                 tools:ignore="VectorDrawableCompat" />
 
@@ -93,7 +99,7 @@
                 android:paddingLeft="3pt"
                 android:text="Location"
                 android:textColor="#171717"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -123,9 +129,13 @@
                 android:paddingLeft="3pt"
                 android:text="Date"
                 android:textColor="#171717"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20pt" />
 
     </LinearLayout>
 
