@@ -31,6 +31,7 @@ class EventsAdapter (private val eventList: ArrayList<Event>) : RecyclerView.Ada
         holder.tvTitle.text = event.description
         holder.tvDate.text = dateFormatter(event.timestamp!!.toDate())
         holder.tvLocation.text = event.location
+        //holder.tvPeople.text
 
         Glide.with(holder.itemView).load(event.userUrl).into(holder.ivProfile)
         Glide.with(holder.itemView).load(event.mediaUrl).into(holder.ivImage)

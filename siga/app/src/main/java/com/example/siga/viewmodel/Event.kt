@@ -10,6 +10,7 @@ data class Event(
     var description: String ?= null,
     var location: String ?= null,
     var timestamp: Timestamp ?= null,
+    var people: Array<String> ?= null,
     var lat: Double ?= 0.0,
     var lng: Double ?= 0.0,
 )
