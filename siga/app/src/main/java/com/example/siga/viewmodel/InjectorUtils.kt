@@ -12,7 +12,5 @@ object InjectorUtils {
     fun provideViewModelFactory(context: Context): ViewModelFactory{
         val repository = AppRepository.getInstance(LocalPostsDatabase.getDatabase(context), RemoteDatabase.getInstance(FirebaseFirestore.getInstance()) )
         return ViewModelFactory(repository)
-
-
     }
 }

@@ -1,23 +1,15 @@
 package com.example.siga.view
 
-import android.os.Build
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.siga.R
 import com.example.siga.viewmodel.Event
-import com.google.firebase.Timestamp
-import com.squareup.okhttp.internal.http.HttpDate.format
-import java.lang.String.format
-import java.text.MessageFormat.format
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 

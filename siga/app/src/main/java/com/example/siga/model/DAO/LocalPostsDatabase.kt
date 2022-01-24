@@ -3,10 +3,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.siga.model.AppRepository
-import com.example.siga.model.entities.Post
+import com.example.siga.model.entities.LocalPost
 
-@Database(entities=arrayOf(Post::class), version = 1)
+@Database(entities=arrayOf(LocalPost::class), version = 1)
 abstract class LocalPostsDatabase : RoomDatabase() {
     abstract fun localPosts() : LocalPostsDAO
 

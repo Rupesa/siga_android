@@ -1,15 +1,19 @@
 package com.example.siga.view
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.siga.R
+import com.example.siga.viewmodel.AppViewModel
 import com.example.siga.viewmodel.Event
+import com.example.siga.viewmodel.InjectorUtils
 import com.google.firebase.firestore.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +36,7 @@ class EventsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,44 +50,44 @@ class EventsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
+
+
         val view =  inflater.inflate(R.layout.fragment_events, container, false)
 
         recyclerView = view.findViewById(R.id.rvEvents)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         // recyclerView.setHasFixedSize(true)
         recyclerView.adapter = eventsAdapter
-        EventChangeListener()
+
+
 
         return view
     }
 
-    private fun EventChangeListener() {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val factory = InjectorUtils.provideViewModelFactory(context)
+        val viewModel: AppViewModel by viewModels {factory}
 
-        db = FirebaseFirestore.getInstance()
-        db.collection("events").
-                addSnapshotListener(object: EventListener<QuerySnapshot>{
-                    override fun onEvent(
-                        value: QuerySnapshot?,
-                        error: FirebaseFirestoreException?
-                    ) {
-                        if (error != null) {
-                            Log.e("Firebase error", error.message.toString())
-                            return
-                        }
+        EventChangeListener(viewModel)
+    }
 
-                        for (dc: DocumentChange in value?.documentChanges!!) {
-                            if (dc.type == DocumentChange.Type.ADDED) {
-                                eventsArrayList.add(dc.document.toObject(Event::class.java))
-                            }
-                        }
-                        eventsAdapter.notifyDataSetChanged()
-                    }
-                })
+    private fun EventChangeListener(viewModel :AppViewModel ) {
 
+        viewModel.fetchRemoteEvents()
+
+        viewModel.remoteEvents().observe(this, Observer {
+            events ->
+                eventsArrayList.removeAll(eventsArrayList)
+                eventsArrayList.addAll(events)
+                eventsAdapter.notifyDataSetChanged()
+        })
     }
 
     companion object {

@@ -1,20 +1,20 @@
 package com.example.siga.model
 
 import androidx.lifecycle.MutableLiveData
-import com.example.siga.model.DAO.LocalPostsDatabase
-import com.example.siga.model.entities.Post
-import com.example.siga.model.entities.User
+import com.example.siga.viewmodel.Event
+import com.example.siga.viewmodel.Post
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.firestore.*
 
 class RemoteDatabase private constructor(private val firestore: FirebaseFirestore) {
+    private var _events:MutableLiveData<ArrayList<Event>> = MutableLiveData<ArrayList<Event>>()
+    private var _posts:MutableLiveData<ArrayList<Post>> = MutableLiveData<ArrayList<Post>>()
+
     fun addRemotePost(post: Post){
-        val collection = firestore.collection("posts").document(post.ownerId).collection("userPosts")
+        val collection = firestore.collection("posts2")
         val task = collection.add(post)
         task.addOnSuccessListener {
-           post.postId = it.id
+           //post.postId = it.id
         }
         task.addOnFailureListener {
             var message = it.message
@@ -22,23 +22,34 @@ class RemoteDatabase private constructor(private val firestore: FirebaseFirestor
         }
 
     }
-    private var posts : MutableLiveData<List<Post>>
-        get() { return posts}
-        set(value) {posts = value}
 
-    fun getRemotePosts(user: User): MutableLiveData<List<Post>> {
-        var postsList: MutableLiveData<List<Post>>
-        var postsCollection = firestore.collection("posts")
-            .document(user.id)
-            .collection("userPosts")
+    fun fetchRemotePosts() {
+        var postsCollection = firestore.collection("posts2")
 
         postsCollection.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            var p = querySnapshot?.toObjects(Post::class.java)
+            var postsList = querySnapshot?.toObjects(Post::class.java)
 
-            posts.postValue(p)
+            _posts.postValue(postsList as ArrayList<Post>?)
         }
-        return posts
     }
+
+    fun fetchRemoteEvents(){
+        var eventsCollection = firestore.collection("events")
+            eventsCollection.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                var eventsList = querySnapshot?.toObjects(Event::class.java)
+                _events.postValue(eventsList as ArrayList<Event>?)
+            }
+
+    }
+
+    internal var events : MutableLiveData<ArrayList<Event>>
+        get() { return _events}
+        set(value) {_events = value}
+
+    internal var posts : MutableLiveData<ArrayList<Post>>
+        get() { return _posts}
+        set(value) {_posts = value}
+
     companion object{
         @Volatile private var instance: RemoteDatabase? = null
         // private val remoteDatabase = Firebase.database

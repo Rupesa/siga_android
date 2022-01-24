@@ -5,11 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.example.siga.R
-import com.example.siga.model.entities.Post
 import com.example.siga.model.entities.User
 import com.example.siga.viewmodel.AppViewModel
 import com.example.siga.viewmodel.InjectorUtils
