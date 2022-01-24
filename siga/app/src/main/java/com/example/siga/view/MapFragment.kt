@@ -1,12 +1,22 @@
 package com.example.siga.view
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.siga.R
+import com.example.siga.viewmodel.AppViewModel
+import com.example.siga.viewmodel.Event
+import com.example.siga.viewmodel.InjectorUtils
+import com.example.siga.viewmodel.ViewModelFactory
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -15,34 +25,46 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapFragment : Fragment() {
+class MapFragment : Fragment(), OnMapReadyCallback{
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }
-
+    private lateinit var ctx: Context
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
+        mapFragment?.getMapAsync(this)
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        ctx = context
+    }
+
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        val factory = InjectorUtils.provideViewModelFactory(ctx)
+        val viewModel: AppViewModel by viewModels { factory }
+
+        viewModel.fetchRemoteEvents()
+        Log.w("Call", "Call back")
+
+        viewModel.remoteEvents().observe(this, Observer { events ->
+            Log.w("Loc", "Call back")
+            events.forEach {
+                Log.w("Loc", it.location!!)
+                val location = LatLng(it.lat!!, it.lng!!)
+                googleMap.addMarker(MarkerOptions().position(location).title(it.description))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 13f))
+            }
+        })
     }
 }
+

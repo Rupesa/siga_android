@@ -9,5 +9,7 @@ data class Event(
     var mediaUrl: String ?= null,
     var description: String ?= null,
     var location: String ?= null,
-    var timestamp: Timestamp ?= null
+    var timestamp: Timestamp ?= null,
+    var lat: Double ?= 0.0,
+    var lng: Double ?= 0.0,
 )

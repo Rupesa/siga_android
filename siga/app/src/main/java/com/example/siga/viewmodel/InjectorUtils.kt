@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.siga.model.AppRepository
 import com.example.siga.model.DAO.LocalPostsDatabase
 import com.example.siga.model.RemoteDatabase
+import com.example.siga.view.MapFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage

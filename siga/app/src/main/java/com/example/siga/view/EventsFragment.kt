@@ -2,6 +2,7 @@ package com.example.siga.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -82,12 +83,7 @@ class EventsFragment : Fragment() {
 
         viewModel.fetchRemoteEvents()
 
-        viewModel.remoteEvents().observe(this, Observer {
-            events ->
-                eventsArrayList.removeAll(eventsArrayList)
-                eventsArrayList.addAll(events)
-                eventsAdapter.notifyDataSetChanged()
-        })
+        viewModel.remoteEvents().observe(this, EventObserver() )
     }
 
     companion object {
@@ -108,5 +104,13 @@ class EventsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+}
+class EventObserver : Observer<ArrayList<Event>> {
+    override fun onChanged(it: ArrayList<Event>) {
+        Log.d("Observer events", "Events")
+        eventsArrayList.removeAll(eventsArrayList)
+        eventsArrayList.addAll(it)
+        eventsAdapter.notifyDataSetChanged()
     }
 }
