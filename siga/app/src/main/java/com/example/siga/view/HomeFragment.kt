@@ -2,6 +2,7 @@ package com.example.siga.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,9 @@ import com.example.siga.R
 import com.example.siga.viewmodel.AppViewModel
 import com.example.siga.viewmodel.Event
 import com.example.siga.viewmodel.InjectorUtils
+import com.example.siga.viewmodel.Post
 import com.google.firebase.firestore.*
+import java.util.Observer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,8 +24,8 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 private lateinit var recyclerView: RecyclerView
-private lateinit var eventsArrayList: ArrayList<Event>
-private lateinit var eventsAdapter: EventsAdapter
+private lateinit var postsArrayList: ArrayList<Post>
+private lateinit var postsAdapter: PostsAdapter
 private lateinit var db: FirebaseFirestore
 
 /**
@@ -41,10 +44,8 @@ class HomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-        eventsArrayList = arrayListOf()
-        eventsAdapter = EventsAdapter(eventsArrayList)
-
+        postsArrayList = arrayListOf()
+        postsAdapter = PostsAdapter(postsArrayList)
     }
 
     override fun onCreateView(
@@ -53,11 +54,10 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
-
-        recyclerView = view.findViewById(R.id.rvEvents)
+        recyclerView = view.findViewById(R.id.rvPosts)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         // recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = eventsAdapter
+        recyclerView.adapter = postsAdapter
 
         return view
     }
@@ -71,16 +71,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun PostChangeListener(viewModel :AppViewModel) {
-    /**
+
         viewModel.fetchRemotePosts()
 
-        viewModel.remotePosts().observe(this, Observer {
-                posts ->
-            eventsArrayList.removeAll(eventsArrayList)
-            eventsArrayList.addAll(posts)
-            eventsAdapter.notifyDataSetChanged()
-        })
-     */
+        viewModel.remotePosts().observe(this, PostObserver())
 
     }
 
@@ -102,5 +96,14 @@ class HomeFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+}
+
+class PostObserver : androidx.lifecycle.Observer<ArrayList<Post>> {
+    override fun onChanged(it: ArrayList<Post>) {
+        Log.d("Observer posts", "Posts")
+        postsArrayList.removeAll(postsArrayList)
+        postsArrayList.addAll(it)
+        postsAdapter.notifyDataSetChanged()
     }
 }

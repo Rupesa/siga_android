@@ -10,6 +10,8 @@ class AppViewModel(private val repository: AppRepository) : ViewModel(){
     //Remote Posts
     fun fetchRemotePosts(user: User) = repository.fetchRemotePosts()
 
+    fun fetchRemotePosts() = repository.fetchRemotePosts()
+
     fun addRemotePost(post: Post) = repository.addRemotePost(post)
 
     fun remotePosts() = repository.remotePosts()
