@@ -26,6 +26,8 @@ class AppViewModel(private val repository: AppRepository) : ViewModel(){
     //Remote Events
     fun fetchRemoteEvents() = repository.fetchRemoteEvents()
 
+    fun addRemoteEvent(event:Event) = repository.addRemoteEvents(event)
+
     fun remoteEvents() = repository.remoteEvents()
 
 

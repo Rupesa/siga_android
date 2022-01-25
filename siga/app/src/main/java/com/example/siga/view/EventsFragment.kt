@@ -67,7 +67,6 @@ class EventsFragment : Fragment() {
         recyclerView.adapter = eventsAdapter
 
 
-
         return view
     }
 

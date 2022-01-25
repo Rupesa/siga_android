@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.chooseAdd">
+
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="408dp"
+        android:layout_height="673dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.381"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.015">>
+
+        <Button
+            android:id="@+id/addPost"
+            android:layout_width="183dp"
+            android:layout_height="73dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:text="Add Post" />
+
+        <Button
+            android:id="@+id/addEvent"
+            android:layout_width="183dp"
+            android:layout_height="73dp"
+            android:layout_gravity="center"
+            android:text="Add Event" />
+
+        <ImageView
+            android:id="@+id/viewImage"
+            android:layout_width="match_parent"
+            android:layout_height="173dp"
+            android:layout_marginTop="60dp" />
+
+    </FrameLayout>
+
+</FrameLayout>

@@ -76,6 +76,14 @@ class HomeFragment : Fragment() {
 
         viewModel.remotePosts().observe(this, PostObserver())
 
+        /*
+        if(postsArrayList.size == 0){
+            viewModel.fetchLocalPosts()
+
+        }
+        */
+
+
     }
 
     companion object {
@@ -104,6 +112,7 @@ class PostObserver : androidx.lifecycle.Observer<ArrayList<Post>> {
         Log.d("Observer posts", "Posts")
         postsArrayList.removeAll(postsArrayList)
         postsArrayList.addAll(it)
+
         postsAdapter.notifyDataSetChanged()
     }
 }

@@ -2,6 +2,7 @@ package com.example.siga.model
 
 import com.example.siga.model.DAO.LocalPostsDatabase
 import com.example.siga.model.entities.LocalPost
+import com.example.siga.viewmodel.Event
 import com.example.siga.viewmodel.Post
 
 
@@ -28,6 +29,8 @@ class AppRepository private constructor(private val postsDao: LocalPostsDatabase
 
     //Remote Events
     fun fetchRemoteEvents() = remoteDB.fetchRemoteEvents()
+
+    fun addRemoteEvents(event: Event) = remoteDB.addRemoteEvent(event)
 
     fun remoteEvents() = remoteDB.events
 

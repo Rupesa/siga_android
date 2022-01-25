@@ -28,7 +28,11 @@ class PostsAdapter (private val postList: ArrayList<Post>) : RecyclerView.Adapte
         val post : Post = postList[position]
         holder.tvUserName.text = post.username
         holder.tvTitle.text = post.description
-        holder.tvDate.text = dateFormatter(post.timestamp!!.toDate())
+
+        if(post.timestamp != null){
+            holder.tvDate.text = dateFormatter(post.timestamp!!.toDate())
+        }
+
         holder.tvLocation.text = post.location
 
         Glide.with(holder.itemView).load(post.userUrl).into(holder.ivProfile)

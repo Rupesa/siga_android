@@ -1,24 +1,28 @@
 package com.example.siga.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.*
 import com.example.siga.R
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+
+private lateinit var homeActivity: HomeActivity
 /**
  * A simple [Fragment] subclass.
  * Use the [CameraFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class CameraFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -28,6 +32,7 @@ class CameraFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -36,6 +41,19 @@ class CameraFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_camera, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val fragment: Fragment = chooseAdd.newInstance("1", "2" )
+
+        val transaction =  parentFragmentManager.beginTransaction()
+        if (transaction != null) {
+            Log.d("Transaction", "dif null")
+            transaction.replace(R.id.frame_content, fragment, "addEvent_fragment")
+            transaction.commit();
+        }
+
     }
 
     companion object {

@@ -22,6 +22,18 @@ class RemoteDatabase private constructor(private val firestore: FirebaseFirestor
         }
 
     }
+    fun addRemoteEvent(event: Event){
+        val collection = firestore.collection("events")
+        val task = collection.add(event)
+        task.addOnSuccessListener {
+            //post.postId = it.id
+        }
+        task.addOnFailureListener {
+            var message = it.message
+            var i = 1 + 1
+        }
+
+    }
 
     fun fetchRemotePosts() {
         var postsCollection = firestore.collection("posts2")
