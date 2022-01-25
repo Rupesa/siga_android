@@ -16,6 +16,8 @@ class AppViewModel(private val repository: AppRepository) : ViewModel(){
 
     fun remotePosts() = repository.remotePosts()
 
+    fun updatePeopleEvent(eventId : String, people: List<String>) = repository.updatePeopleEvent(eventId, people)
+
 
     //Local Posts
     fun fetchLocalPosts() = repository.fetchLocalPosts()

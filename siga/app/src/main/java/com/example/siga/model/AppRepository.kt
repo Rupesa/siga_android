@@ -12,9 +12,10 @@ class AppRepository private constructor(private val postsDao: LocalPostsDatabase
     //Remote Posts
     fun fetchRemotePosts() = remoteDB.fetchRemotePosts()
 
+    fun updatePeopleEvent(eventId : String, people: List<String>) = remoteDB.updatePeopleEvent(eventId, people)
+
     fun addRemotePost(post: Post){
         remoteDB.addRemotePost(post)
-
     }
     fun remotePosts() = remoteDB.posts
 

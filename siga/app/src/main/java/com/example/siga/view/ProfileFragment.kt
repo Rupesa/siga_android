@@ -22,7 +22,6 @@ private const val ARG_PARAM2 = "param2"
 private lateinit var ivProfile: ImageView
 private lateinit var tvName: TextView
 private lateinit var tvEmail: TextView
-private lateinit var tvDescription: TextView
 private lateinit var btnLogout: Button
 
 private lateinit var homeActivity: HomeActivity
@@ -68,13 +67,11 @@ class ProfileFragment : Fragment() {
         ivProfile = view.findViewById(R.id.ivProfile) as ImageView
         tvName = view.findViewById(R.id.tvName) as TextView
         tvEmail = view.findViewById(R.id.tvEmail) as TextView
-        tvDescription = view.findViewById(R.id.tvDescription) as TextView
         btnLogout = view.findViewById(R.id.logout_btn) as Button
 
         Glide.with(this).load(imageUrl).into(ivProfile);
         tvName.text = name
         tvEmail.text = email
-        tvDescription.text = description
 
         btnLogout.setOnClickListener {
             homeActivity.mAuth.signOut()

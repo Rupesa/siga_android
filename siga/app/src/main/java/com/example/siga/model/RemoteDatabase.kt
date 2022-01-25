@@ -20,7 +20,6 @@ class RemoteDatabase private constructor(private val firestore: FirebaseFirestor
             var message = it.message
             var i = 1 + 1
         }
-
     }
     fun addRemoteEvent(event: Event){
         val collection = firestore.collection("events")
@@ -52,6 +51,12 @@ class RemoteDatabase private constructor(private val firestore: FirebaseFirestor
                 _events.postValue(eventsList as ArrayList<Event>?)
             }
 
+    }
+
+    fun updatePeopleEvent(eventId : String, people: List<String>){
+        firestore.collection("events")
+            .document(eventId)
+            .update("people", people);
     }
 
     internal var events : MutableLiveData<ArrayList<Event>>

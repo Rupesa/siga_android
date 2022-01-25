@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -34,7 +35,16 @@ class MapFragment : Fragment(), OnMapReadyCallback{
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        var view = inflater.inflate(R.layout.fragment_map, container, false)
+
+        var ab = (activity as AppCompatActivity).supportActionBar
+
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(false);
+            ab.setHomeButtonEnabled(false);
+        }
+
+        return view
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -3,10 +3,11 @@ package com.example.siga.view
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,7 +47,7 @@ class EventsFragment : Fragment() {
         }
 
         eventsArrayList = arrayListOf()
-        eventsAdapter = EventsAdapter(eventsArrayList)
+        eventsAdapter = EventsAdapter(eventsArrayList, activity as HomeActivity)
 
     }
 
@@ -66,6 +67,12 @@ class EventsFragment : Fragment() {
         // recyclerView.setHasFixedSize(true)
         recyclerView.adapter = eventsAdapter
 
+        var ab = (activity as AppCompatActivity).supportActionBar
+
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(false);
+            ab.setHomeButtonEnabled(false);
+        }
 
         return view
     }
