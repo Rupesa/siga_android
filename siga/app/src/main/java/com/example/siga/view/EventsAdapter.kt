@@ -55,7 +55,7 @@ class EventsAdapter (private val eventList: ArrayList<Event>, private val homeAc
         }
         holder.tvPeople.text = event.people?.size.toString()
 
-       // Glide.with(holder.itemView).load(event.userUrl).into(holder.ivProfile)
+        Glide.with(holder.itemView).load(event.userUrl).into(holder.ivProfile)
         Glide.with(holder.itemView).load(event.mediaUrl).into(holder.ivImage)
 
         if (event.people?.contains(name) == true) {
@@ -86,8 +86,9 @@ class EventsAdapter (private val eventList: ArrayList<Event>, private val homeAc
                 people = event.people!!
                 people += name
             }
-
-            updatePeopleInEvent(event.eventId!!, people)
+            if (event.eventId != null) {
+                updatePeopleInEvent(event.eventId!!, people)
+            }
         }
 
     }

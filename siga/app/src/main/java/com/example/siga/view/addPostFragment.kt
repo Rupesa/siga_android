@@ -34,7 +34,10 @@ import com.example.siga.model.entities.LocalPost
 import com.example.siga.viewmodel.Post
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp.now
 import com.google.firebase.storage.FirebaseStorage
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
 
@@ -89,6 +92,8 @@ class addPostFragment : Fragment() {
 
     }
 
+    // fun LocalDateTime.toTimestamp(zone: ZoneId = ZoneId.systemDefault()) = Timestamp(zone).toEpochSecond(), nano)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val btnSelectPhoto = view.findViewById(R.id.btnSelectPhoto) as Button
@@ -121,6 +126,7 @@ class addPostFragment : Fragment() {
                 post.username = homeActivity.userName
                 post.mediaUrl = mediaUrl
                 post.userUrl = homeActivity.userImageUrl
+                post.timestamp = now()
 
                 postLocal.location = locationText.text.toString()
                 postLocal.description = descriptionText.text.toString()
@@ -133,7 +139,7 @@ class addPostFragment : Fragment() {
                 Log.d("mediaUrl", mediaUrl)
 
                 viewModel.addRemotePost(post)
-                viewModel.addLocalPost(postLocal)
+                //viewModel.addLocalPost(postLocal)
 
                 val fragment: Fragment = CameraFragment.newInstance("Event Added with success", "2" )
 

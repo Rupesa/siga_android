@@ -113,11 +113,12 @@ class addEventFragment : Fragment() {
                 var event:Event = Event()
                 event.location = locationText.text.toString()
                 event.description = descriptionText.text.toString()
-                event.lat = -8.659969
-                event.lng = 40.631375
+                event.lng = -8.659969
+                event.lat = 40.631375
                 event.username = homeActivity.userName
                 event.mediaUrl = mediaUrl
                 event.userUrl = homeActivity.userImageUrl
+                event.people = emptyList()
 
                 Log.d("mediaUrl", mediaUrl)
 
